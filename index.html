@@ -100,7 +100,7 @@
 
 <h2 id="toc_1">Downtime Roulette</h2>
 
-<p><img src="../assets/decor/roulette.png" alt="Gambling With Uptime"></p>
+<p><img src="assets/decor/roulette.png" alt="Gambling With Uptime"></p>
 
 <p>Picture a roulette wheel in a casino, where any particular number has a 1 in 37 chance of being hit. Imagine you could place a single bet that a given number will <em>not</em> hit (about 97.3% in your favor), and winning would pay out 10 times your wager. Would you make that bet? I&#39;d reach for my wallet so fast my thumb would start a fire on my pocket.</p>
 
@@ -221,7 +221,7 @@ multi-datacenter distributed systems like <em>Riak Enterprise</em>.</p>
 
 <p>Key/value is the most basic construct in all of computerdom. You can think of a key like a home address, such as Bob&#39;s house with the unique key 5124, while the value would be maybe Bob (and his stuff).</p>
 
-<p><img src="../assets/decor/addresses.png" alt="A Key is an Address"></p>
+<p><img src="assets/decor/addresses.png" alt="A Key is an Address"></p>
 
 <pre><code class="javascript">hashtable[&quot;5124&quot;] = &quot;Bob&quot;
 </code></pre>
@@ -270,7 +270,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>For example, imagine you have a list of country keys, whose values are those countries&#39; capitals. If all you do is replicate that data to 2 servers, you would have 2 duplicate databases.</p>
 
-<p><img src="../assets/replication.svg" alt="Replication"></p>
+<p><img src="assets/replication.svg" alt="Replication"></p>
 
 <p>The downside with replication is that you are multiplying the amount of storage required for every duplicate. There is also some network overhead with this approach, since values must also be routed to all replicated nodes on write. But there is a more insidious problem with this approach, which I will cover shortly.</p>
 
@@ -282,7 +282,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>For example, if we partition our countries into 2 servers, we might put all countries beginning with letters A-N into Node A, and O-Z into Node B.</p>
 
-<p><img src="../assets/partitions.svg" alt="Partitions"></p>
+<p><img src="assets/partitions.svg" alt="Partitions"></p>
 
 <p>There is a bit of overhead to the partition approach. Some service must keep track of what range of values live on which node. A requesting application must know that the key <code>Spain</code> will be routed to Node B, not Node A.</p>
 
@@ -298,7 +298,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>The Riak team suggests a minimum of 5 nodes for a Riak cluster, and replicating to 3 nodes (this setting is called <code>n_val</code>, for the number of <em>nodes</em> on which to replicate each object).</p>
 
-<p><img src="../assets/replpart.svg" alt="Replication Partitions"></p>
+<p><img src="assets/replpart.svg" alt="Replication Partitions"></p>
 
 <!-- If the odds of a node going down on any day is 1%, then the odds of any server going down each day when you have 100 of them is about (1-(0.99^100)) 63%. For sufficiently large systems, servers going down are no longer edge-cases. They become regular cases that must be planned for, and designed into your system.
 -->
@@ -319,7 +319,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>If we visualize our 64 partitions as a ring, <code>favorite</code> falls here.</p>
 
-<p><img src="../assets/ring0.svg" alt="Riak Ring"></p>
+<p><img src="assets/ring0.svg" alt="Riak Ring"></p>
 
 <p>You may have wondered, &quot;Didn&#39;t he say that Riak suggests a minimum of 5 nodes? How can we put 64 partitions on 5 nodes?&quot; We just give each node more than one partition, which Riak calls a <em>vnode</em>, or <em>virtual node</em>.</p>
 
@@ -339,7 +339,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>We can visualize the Ring with its vnodes, managing nodes, and where <code>favorite</code> will go.</p>
 
-<p><img src="../assets/ring1.svg" alt="Riak Ring"></p>
+<p><img src="assets/ring1.svg" alt="Riak Ring"></p>
 
 <p>The Ring is more than just a circular array of hash partitions. It&#39;s also a system of metadata that gets copied to every node. Each node is aware of every other node in the cluster, which nodes own which vnodes, and other system data.</p>
 
@@ -380,7 +380,7 @@ bagshot[&quot;5122&quot;] = &quot;Gas&quot;
 
 <p>A thought experiment may help clarify things.</p>
 
-<p><img src="../assets/nrw.svg" alt="NRW"></p>
+<p><img src="assets/nrw.svg" alt="NRW"></p>
 
 <h4>N</h4>
 
@@ -751,7 +751,7 @@ Content-Length: 16
 
 <p>Think about it like this. Say you&#39;re out drinking with your friend. You order 2 drinks (W=2), but before they arrive, she leaves temporarily. If you were a strict quorum, you could merely refuse both drinks, since the required people (N=2) are unavailable. But you&#39;d rather be a sloppy drunk... erm, I mean sloppy <em>quorum</em>. Rather than deny the drink, you take both, one accepted <em>on her behalf</em> (you also get to pay).</p>
 
-<p><img src="../assets/decor/drinks.png" alt="A Sloppy Quorum"></p>
+<p><img src="assets/decor/drinks.png" alt="A Sloppy Quorum"></p>
 
 <p>When she returns, you slide her drink over. This is known as <em>hinted handoff</em>, which we&#39;ll look at again in the next chapter. For now it&#39;s sufficient to note that there&#39;s a difference between the default sloppy quorum (W), and requiring a strict quorum of primary nodes (PW).</p>
 
@@ -1083,7 +1083,7 @@ databases. In Riak, you execute a MapReduce job on a single node, which
 then propagates to the other nodes. The results are mapped and reduced,
 then further reduced down to the calling node and returned.</p>
 
-<p><img src="../assets/mapreduce.svg" alt="MapReduce Returning Name Char Count"></p>
+<p><img src="assets/mapreduce.svg" alt="MapReduce Returning Name Char Count"></p>
 
 <p>Let&#39;s assume we have a bucket for log values that stores messages
 prefixed by either INFO or ERROR. We want to count the number of INFO
@@ -1680,7 +1680,7 @@ queue up so many messages at a time (MsgQ), and so on. This is useful for advanc
 and is especially useful if you know Erlang or need help from other users, the Riak team, or
 Basho.</p>
 
-<p><img src="../assets/top.pdf" alt="Top"></p>
+<p><img src="assets/top.pdf" alt="Top"></p>
 
 <h3>Making a Cluster</h3>
 
@@ -1921,14 +1921,14 @@ before, Riak is built on Erlang, but that&#39;s not the whole story. It&#39;s mo
 to say Riak is fundamentally Erlang, with some pluggable native C code components
 (like leveldb), Java (Yokozuna), and even JavaScript (for MapReduce or commit hooks).</p>
 
-<p><img src="../assets/riak-stack.svg" alt="Tech Stack"></p>
+<p><img src="assets/riak-stack.svg" alt="Tech Stack"></p>
 
 <p>The way Riak stacks technologies is a good thing to keep in mind, in order to make
 sense of how to configure it properly.</p>
 
 <h3>Erlang</h3>
 
-<p><img src="../assets/riak-stack-erlang.svg" alt="Tech Stack Erlang"></p>
+<p><img src="assets/riak-stack-erlang.svg" alt="Tech Stack Erlang"></p>
 
 <p>When you fire up a Riak node, it also starts up an Erlang VM (virtual machine) to run
 and manage Riak&#39;s processes. These include vnodes, process messages, gossips, resource
@@ -1982,7 +1982,7 @@ some optional SSL encryption settings.</p>
 
 <h3>riak_core</h3>
 
-<p><img src="../assets/riak-stack-core.svg" alt="Tech Stack Core"></p>
+<p><img src="assets/riak-stack-core.svg" alt="Tech Stack Core"></p>
 
 <p>If any single component deserves the title of &quot;Riak proper&quot;, it would
 be <em>Riak Core</em>. Core shares responsibility with projects built atop it
@@ -2047,7 +2047,7 @@ in the cluster (<code>ring_creation_size</code>), and several port options.</p>
 
 <h3>riak_kv</h3>
 
-<p><img src="../assets/riak-stack-kv.svg" alt="Tech Stack KV"></p>
+<p><img src="assets/riak-stack-kv.svg" alt="Tech Stack KV"></p>
 
 <p>Riak KV is a key/value implementation of Riak Core. This is where the
 magic happens, such as handling requests and coordinating them for
@@ -2095,7 +2095,7 @@ backend settings, MapReduce, and JavaScript integration.</p>
 
 <h3>riak_pipe</h3>
 
-<p><img src="../assets/riak-stack-pipe.svg" alt="Tech Stack Pipe"></p>
+<p><img src="assets/riak-stack-pipe.svg" alt="Tech Stack Pipe"></p>
 
 <p>Riak Pipe is an input/output messaging system that forms the basis of Riak&#39;s
 MapReduce. This was not always the case, and MR used to be a dedicated
@@ -2179,7 +2179,7 @@ precommit hooks.</p>
 
 <h3>yokozuna</h3>
 
-<p><img src="../assets/riak-stack-yokozuna.svg" alt="Tech Stack Yokozuna"></p>
+<p><img src="assets/riak-stack-yokozuna.svg" alt="Tech Stack Yokozuna"></p>
 
 <p>Yokozuna is the newest addition to the Riak ecosystem. It&#39;s an integration of
 the distributed Solr search engine into Riak, and provides some extensions
@@ -2196,7 +2196,7 @@ it, you can choose which <code>solr_port</code> will be used.</p>
 
 <h3>bitcask, eleveldb, memory, multi</h3>
 
-<p><img src="../assets/riak-stack-backend.svg" alt="Tech Stack Backend"></p>
+<p><img src="assets/riak-stack-backend.svg" alt="Tech Stack Backend"></p>
 
 <p>Several modern databases have swappable backends, and Riak is no different in that
 respect. Riak currently supports three different storage engines---*Bitcask*,
@@ -2293,7 +2293,7 @@ by just setting its <code>backend</code> property.</p>
 
 <h3>riak_api</h3>
 
-<p><img src="../assets/riak-stack-api.svg" alt="Tech Stack API"></p>
+<p><img src="assets/riak-stack-api.svg" alt="Tech Stack API"></p>
 
 <p>So far, all of the components we&#39;ve seen have been inside the Riak
 house. The API is the front door. <em>In a perfect world</em>, the API would
@@ -2515,7 +2515,7 @@ the keys to the kingdom.</p>
 <code>https</code>) <code>https://localhost:8069/admin</code>. After you log in using the user you set, you
 should see a snapshot page, which communicates the health of your cluster.</p>
 
-<p><img src="../assets/control-snapshot.png" alt="Snapshot View"></p>
+<p><img src="assets/control-snapshot.png" alt="Snapshot View"></p>
 
 <p>If something is wrong, you&#39;ll see a huge red &quot;X&quot; instead of the green check mark, along
 with a list of what the trouble is.</p>
@@ -2523,7 +2523,7 @@ with a list of what the trouble is.</p>
 <p>From here you can drill down into a view the cluster&#39;s nodes, with details on memory usage,
 partition distribution, and other status. You can also add and configure and these nodes.</p>
 
-<p><img src="../assets/control-cluster.png" alt="Cluster View"></p>
+<p><img src="assets/control-cluster.png" alt="Cluster View"></p>
 
 <p>There is more in line for Riak Control, like performing MapReduce queries, stats views,
 graphs, and more coming down the pipe. It&#39;s not a universal toolkit quite yet,
